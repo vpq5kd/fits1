@@ -31,7 +31,7 @@ void fit1(int entries=1000, bool save=false) {
 	
  	 TF1 *fitfunc = randomHist1->GetFunction("gaus");
 	 double chi2 = fitfunc->GetChisquare();
-	 chi2hist->Fill(chi2);
+	 chi2hist->Fill(chi2/fitfunc->GetNDF());
  }
  TCanvas *c1 = new TCanvas("c1","My Canvas", 800,600);
  chi2hist->Draw();
