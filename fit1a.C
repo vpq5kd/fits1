@@ -5,7 +5,7 @@
 #include "TRandom2.h"
 #include "TROOT.h"
 
-
+// chatGPT was used for root syntax/functions.
 // fit1.C
 // entries is the number of random samples filled into the histogram
 void fit1(int entries=1000, bool save=false) {
@@ -20,7 +20,7 @@ void fit1(int entries=1000, bool save=false) {
   TH1F *chi2hist = new TH1F("chi2hist","reduced #chi^{2}",50,0,3);
   TH1F *randomHist1 = new TH1F("randomHist1", "Random Histogram;x;frequency", 100, 0, 100);
   TRandom2 *generator=new TRandom2(0);  // parameter == seed, 0->use clock
-  int ntrials = 100;
+  int ntrials = 1000;
   int point = 0; 
   for (int i = 0; i< ntrials; i++){
 	 randomHist1->Reset();

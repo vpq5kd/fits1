@@ -18,3 +18,6 @@ You are welcome to modify the provided code for your projects and to use other p
 * TH1hist2Numpy.ipynb : an example for converting a ROOT histogram to numpy arrays
 
 Note that from ROOT you can type ```new TBrowser()``` or in Python r.TBrowser() to get a graphical browser that allows you to look at what's contained in the TFiles.
+
+**Answers**:
+1) ! sigma of the width of the mean is almost identical to the uncertainty reported for the mean. This is consistent with the expectation as a roughly equivalent sigma to error implies a fit functioning as expected, and these fits are drawn to a random function almost identical to themselves.  
