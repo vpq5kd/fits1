@@ -22,4 +22,6 @@ Note that from ROOT you can type ```new TBrowser()``` or in Python r.TBrowser() 
 **Answers**:
 1) ! sigma of the width of the mean is almost identical to the uncertainty reported for the mean. This is consistent with the expectation as a roughly equivalent sigma to error implies a fit functioning as expected, and these fits are drawn to a random function almost identical to themselves.
 
-2) The results are in line with what we would expect them to be. In the low-statistics case, the NLL should be slightly more accurate (lower sigma), but both means should hover around the expected mean of 50. This is precisely what we see in the resultant graphs.   
+2) The results are in line with what we would expect them to be. In the low-statistics case, the NLL should be slightly more accurate (lower sigma), but both means should hover around the expected mean of 50. This is precisely what we see in the resultant graphs.
+
+3) P value = 0.351   
