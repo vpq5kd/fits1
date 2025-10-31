@@ -58,7 +58,8 @@ void fit1(int entries=1000, bool save=false) {
 
  c1->cd(4);
  meanErrorHist->Draw();
-	
+
+c1->SaveAs("result1.pdf");	
   if (save) {
     tf->Write();
     tf->Close();
