@@ -47,6 +47,7 @@ void fit1(int entries=1000, bool save=false) {
  c1->cd(2);
  meanHistNLL->Draw();
 
+ c1->SaveAs("result2.pdf");
   if (save) {
     tf->Write();
     tf->Close();
