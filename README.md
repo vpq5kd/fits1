@@ -24,4 +24,6 @@ Note that from ROOT you can type ```new TBrowser()``` or in Python r.TBrowser() 
 
 2) The results are in line with what we would expect them to be. In the low-statistics case, the NLL should be slightly more accurate (lower sigma), but both means should hover around the expected mean of 50. This is precisely what we see in the resultant graphs.
 
-3) P value = 0.351   
+3) P value = 0.351
+
+4) Now I'm going to be completely honest I don't know if I did this right. However, it appears that though the two graphs fluctuate similarly around the lower end of the mean, they are almost inverse of eachother. I.E. they stay in the same range but when one goes up the other goes down.    
