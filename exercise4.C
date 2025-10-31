@@ -26,48 +26,26 @@ double ComputeNLL(TH1F* h, TF1* f) {
     return -2.0 * nll;  // convention: multiply by -2
 }
 
-void exercise3(){
+void exercise4(){
 	TFile *f = new TFile("histo25.root");
 	TH1F *data = (TH1F*)f->Get("randomHist1");
 	data->Fit("gaus","L");
 	TF1 *fitfunc = data->GetFunction("gaus");
 	
-	double mean = fitfunc->GetParameter(0);
-	double sigma = fitfunc->GetParameter(2);
+	double bestMean = fitfunc->GetParameter(1);
+	double bestErr = fitfunc->GetParError(1);
 
+	int nPoints = 1000;
 
-	const int experiments = 1000;
-  	TRandom2 *generator=new TRandom2(0);  // parameter == seed, 0->use clock
-	double nll_for_data=ComputeNLL(data, fitfunc);
-
-	TH1F *nllHist = new TH1F("NLL Distribution", "NLL Distribution from each Experiment", 100, nll_for_data *0.8, nll_for_data *1.2);
-	//logic for this for loop developed in conjunction with ChatGPT
-	for (int i = 0; i < experiments; i++){
-		TH1F *experiment = (TH1F*)data->Clone(Form("experiment_%d",i));
-		experiment->Reset();
-		for (int i =1; i<=experiment->GetNbinsX();i++){
-			double xi = experiment->GetBinCenter(i);
-			double lambda = fitfunc->Eval(xi) * experiment->GetBinWidth(i);
-			int yi = generator->Poisson(lambda);
-			experiment->SetBinContent(i,yi);
-		}
-
-		double nll_experiment = ComputeNLL(experiment, fitfunc);
-		nllHist->Fill(nll_experiment);
-		
-		delete experiment;
-
+	TGraph *graph = new TGraph();
+	for (int i = 0; i < nPoints; i++){
+		double mean_test = bestMean - 4*bestErr + (8*bestErr * i)/(nPoints -1); // variable def from chatGPT
+		fitfunc->FixParameter(1, mean_test);
+		data->Fit(fitfunc, "L");
+		double nll_val = fitfunc->GetChisquare(); // returns -2ln(l) according to chatGPT
+		graph->SetPoint(i, mean_test, nll_val);
 	}
-	TCanvas *c1 = new TCanvas("c1","c1",800,600);
-	nllHist->Draw();
-	TLine *line = new TLine(nll_for_data, 0, nll_for_data, nllHist->GetMaximum());
-	line->SetLineColor(kRed);
-	line->Draw("same");
-
-	//chatGPT taught me how to calculate a p value for this because I don't know a lot of stats lol
-	int binData = nllHist->FindBin(nll_for_data);
-	int nAbove = nllHist->Integral(binData, nllHist->GetNbinsX());
-	double pVal = double(nAbove)/experiments;
-
-	cout <<"p-value = " << pVal <<endl;
+	TCanvas *c1 = new TCanvas("c", "NLL and #chi^{2} Scans", 800, 600);
+	graph->SetTitle("Test Mean vs NLL Value;Mean Value; -2lnL");
+	graph->Draw("AP");
 }
