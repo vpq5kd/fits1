@@ -35,17 +35,18 @@ void exercise4(){
 	double bestMean = fitfunc->GetParameter(1);
 	double bestErr = fitfunc->GetParError(1);
 
-	int nPoints = 1000;
+	int nPoints = 50;
 
 	TGraph *graph = new TGraph();
 	for (int i = 0; i < nPoints; i++){
 		double mean_test = bestMean - 4*bestErr + (8*bestErr * i)/(nPoints -1); // variable def from chatGPT
-		fitfunc->FixParameter(1, mean_test);
-		data->Fit(fitfunc, "L");
-		double nll_val = fitfunc->GetChisquare(); // returns -2ln(l) according to chatGPT
+		TF1 *fitfunccopy = (TF1*)fitfunc->Clone();
+		fitfunccopy->FixParameter(1, mean_test);
+		data->Fit(fitfunccopy, "L");
+		double nll_val = fitfunccopy->GetChisquare(); // returns -2ln(l) according to chatGPT
 		graph->SetPoint(i, mean_test, nll_val);
 	}
 	TCanvas *c1 = new TCanvas("c", "NLL and #chi^{2} Scans", 800, 600);
 	graph->SetTitle("Test Mean vs NLL Value;Mean Value; -2lnL");
-	graph->Draw("AP");
+	graph->Draw("AL");
 }
