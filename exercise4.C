@@ -63,7 +63,6 @@ void exercise3(){
 	TLine *line = new TLine(nll_for_data, 0, nll_for_data, nllHist->GetMaximum());
 	line->SetLineColor(kRed);
 	line->Draw("same");
-	c1->SaveAs("result3.pdf");
 
 	//chatGPT taught me how to calculate a p value for this because I don't know a lot of stats lol
 	int binData = nllHist->FindBin(nll_for_data);
